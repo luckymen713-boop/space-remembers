@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Summer Space Remembers</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--bg:#0f1b3d;--card:#18285a;--text:#eef1fb;--muted:#a9b4d6;--accent:#ff9a3c;--line:#2d417f;--boy:#3b82f6;--boy-text:#fff;color-scheme:dark}
+@media (prefers-color-scheme:light){:root{--bg:#eaf1fb;--card:#fff;--text:#14213d;--muted:#4a5878;--accent:#d9640a;--line:#c5d3ea;--boy:#eff6ff;--boy-text:#1e3a8a;color-scheme:light}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:18px/1.6 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:"Baloo 2",system-ui,sans-serif;line-height:1.15;margin:0 0 .4em}
+a{color:var(--accent)}
+header.top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line)}
+.lang button{font:inherit;font-weight:700;padding:6px 12px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--accent);color:#14213d;border-color:var(--accent)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hero{padding:56px 16px 40px;max-width:760px;margin:auto}
+.hero h1{font-size:clamp(2.2rem,8vw,4rem);font-weight:800}
+.hero p{color:var(--muted);max-width:56ch}
+.hero .age{display:inline-block;font-size:.85rem;font-weight:700;border:1px solid var(--line);border-radius:8px;padding:4px 10px}
+main{max-width:760px;margin:auto;padding:0 16px 80px}
+.group{font-size:clamp(1.8rem,6vw,2.6rem);font-weight:800;margin:56px 0 0;padding-bottom:8px;border-bottom:3px solid var(--accent)}
+article{background:var(--card);border:1px solid var(--line);padding:22px;margin:24px 0;border-radius:14px}
+.place{color:var(--accent);font-weight:700;margin:0 0 4px;font-size:.95rem}
+article h2{margin:0 0 6px}
+.badge{font-size:.82rem;font-weight:700;padding:4px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--muted);display:inline-block}
+.dialogue,.more-box{display:flex;flex-direction:column;gap:10px}
+.dialogue{margin:16px 0}
+.msg{padding:10px 14px;border-radius:12px;max-width:88%;font-size:.96rem;line-height:1.55}
+.msg.sys{background:var(--bg);border:1px solid var(--accent);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.gg{background:var(--boy);color:var(--boy-text);align-self:flex-end;font-weight:700;border-bottom-right-radius:3px}
+.more-box{display:none;margin-top:4px;padding-top:12px;border-top:1px dashed var(--line)}
+.more-box.open{display:flex}
+.btn-outline{font:inherit;font-size:.92rem;font-weight:700;background:var(--bg);color:var(--accent);border:1px solid var(--accent);padding:8px 15px;border-radius:12px;border-bottom-left-radius:3px;cursor:pointer;align-self:flex-start;text-align:left}
+.btn-outline:hover{background:var(--accent);color:#14213d}
+.science,.eng{border-left:4px solid var(--accent);padding:4px 0 4px 14px;margin:16px 0}
+.science h3,.eng h3{font-size:1.08rem}
+.science ul{margin:0;padding-left:20px}
+.eng p{margin:0;color:var(--muted);font-size:.95rem}
+.row{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.qr{background:#fff;padding:8px;line-height:0}
+.btn{display:inline-block;font:inherit;font-weight:700;background:var(--accent);color:#14213d;border:0;padding:10px 16px;border-radius:8px;cursor:pointer}
+.hint,.src{font-size:.9rem;color:var(--muted);margin:6px 0 0}
+.sources{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+#viewer{position:fixed;inset:0;z-index:20;background:var(--bg);display:none;flex-direction:column}
+#viewer.on{display:flex}
+#viewer model-viewer{flex:1;width:100%;min-height:0}
+#viewer .bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px}
+#vmsg{padding:0 16px 12px;color:var(--muted);margin:0}
+.cta{text-align:center}
+@media print{header.top,#viewer,.btn,.btn-outline{display:none!important}.more-box{display:flex!important}body{background:#fff;color:#000;font-size:12pt}article{break-inside:avoid;border:1px solid #999;background:#fff}.group{break-after:avoid}.hero p,.hint,.src,.eng p,.badge,.sources{color:#000}.msg.sys,.msg.gg{background:#fff;color:#000;border:1px solid #999}}
+</style>
+</head>
+<body>
+<header class="top">
+<strong>Space Remembers</strong>
+<div class="lang" role="group" aria-label="Language">
+<button data-l="uk" aria-pressed="true">UA</button>
+<button data-l="en" aria-pressed="false">EN</button>
+</div>
+</header>
+<section class="hero">
+<h1 data-t="title"></h1>
+<div id="intro"></div>
+<p class="age" data-t="age"></p>
+</section>
+<main id="chapters"></main>
+<section class="hero cta">
+<h2 data-t="endTitle"></h2>
+<p data-t="endText"></p>
+<div class="sources">
+<p><strong data-t="sourcesTitle"></strong></p>
+<p data-t="sourcesText"></p>
+</div>
+</section>
+<div id="viewer" role="dialog" aria-modal="true">
+<div class="bar"><strong id="vtitle"></strong><button class="btn" id="vclose" data-t="close"></button></div>
+<model-viewer id="mv" camera-controls auto-rotate ar ar-modes="webxr scene-viewer quick-look" shadow-intensity="1" alt="3D model"></model-viewer>
+<p id="vmsg"></p>
+</div>
+<script>
+const UI = {
+uk: {
+title: "Літо, яке не забуде космос",
+intro: "Зібрати ракету на літніх канікулах, вшити у скафандр ШІ у ролі штурмана-навігатора і відправитися в космічний тур – чи не звучить цей план як ідеальне заняття для літа? А от хлопчик Лукас впевнений, що краще і бути не може!\nЗамість нудних параграфів із підручника на нього чекає зустріч зі справжніми роботами та кораблями NASA, які побували на Місяці, Марсі та в далеких космічних висотах! На кожній зупинці помічник розповість, навіщо ж їх відправили так далеко та чим вони змогли зарадити вченим.",
+age: "Для школярів 8–14 років",
+askMore: "Хотів би ти дізнатись ще щось про нього?",
+askLess: "Згорнути розповідь",
+eng: "Як це працювало",
+science: "Що він відкрив",
+source: "Джерело",
+view3d: "Відкрити 3D",
+scan: "Скануй QR, щоб побачити модель на телефоні або в доповненій реальності.",
+close: "Закрити",
+noModel: "Файл моделі ще не додано. Покладіть .glb у папку models/.",
+endTitle: "Далі буде...",
+endText: "Системи скафандра фіксують курс додому, але Лукас знає: нові місії у далекий космос вже не за горами, і пригоди тільки починаються.",
+sourcesTitle: "Джерела та архіви",
+sourcesText: "Матеріали та 3D-моделі базуються на каталозі NASA NSSDC та офіційних ресурсах NASA Science."
+},
+en: {
+title: "The Summer Space Remembers",
+intro: "Imagine building a rocket during your summer vacation, equipping your spacesuit with an AI-powered navigator, and setting off on a journey through space. Doesn’t that sound like the perfect summer adventure? Well, a boy named Lucas certainly thinks so!\nInstead of spending his summer reading boring textbook chapters, Lucas is about to encounter real NASA spacecraft and robotic explorers that made history by reaching the Moon, Mars, and the distant reaches of space!\nAt every stop, his AI companion will explain why these incredible machines were sent so far from Earth and how their missions helped scientists uncover the mysteries of the universe.",
+age: "For ages 8–14",
+askMore: "Would you like to know something more about it?",
+askLess: "Hide details",
+eng: "How it worked",
+science: "What it discovered",
+source: "Source",
+view3d: "Open 3D",
+scan: "Scan the QR code to see the model on your phone or in augmented reality.",
+close: "Close",
+noModel: "Model file is not added yet. Put a .glb file into the models/ folder.",
+endTitle: "To Be Continued...",
+endText: "The systems in Lucas’s spacesuit have already plotted a course back home. But Lucas knows one thing for sure: new missions into deep space are just around the corner, and his adventures are only beginning.",
+sourcesTitle: "Sources & Archives",
+sourcesText: "Stories and 3D assets are based on the NASA NSSDC Master Catalog and official NASA Science resources."
+}
+};
+
+const G = {
+  moon: { uk: "Місяць", en: "The Moon" },
+  mars: { uk: "Марс", en: "Mars" },
+  deep: { uk: "Далекий космос", en: "Deep Space" }
+};
+
+const CHAPTERS = [
+{
+id: "apollo11", group: "moon",
+src: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-059C",
+place: { uk: "Море Спокою (0°40′26.69″ пн. ш., 23°28′22.69″ сх. д.)", en: "Sea of Tranquility (0°40′26.69″N, 23°28′22.69″E)" },
+status: { uk: "Залишено на поверхні (1969)", en: "Left on the surface (1969)" },
+name: { uk: "Apollo 11: Місячний модуль «Орел» (LM-5)", en: "Apollo 11: Lunar Module “Eagle” (LM-5)" },
+dialogue: {
+uk: [
+{ type: "sys", text: "Наша перша зупинка! Прямо перед тобою: посадковий ступінь місячного модуля «Орел». Саме він у далекому 1969 році вперше доставив людей сюди, на Місяць. Ціллю було довести, що людина здатна долетіти до іншого небесного тіла, безпечно сісти та повернутися додому." },
+{ type: "gg", text: "Ого, так ось з чого почався космічний туризм! А чому ж від нього лишились тільки ніжки?" },
+{ type: "sys", text: "Бо «голова» полетіла назад з астронавтами, а ніжки стали стартовим майданчиком. За час, що вони встигли провести на поверхні Місяця, вони зібрали 21 кілограм ґрунту. Завдяки цьому вчені змогли оцінити вік Місяця й дістали вагомі підтвердження, що він, імовірно, утворився після зіткнення Землі з іншим небесним тілом." },
+{ type: "gg", text: "А ці дивні дзеркальця поруч, теж їхня робота?" },
+{ type: "sys", text: "Авжеж! Це лазерний кутовий відбивач. Вчені досі «стріляють» з Землі потужним лазером і засікають час повернення променя. Таким чином ми дізналися, що Місяць щороку віддаляється від Землі на 3,8 сантиметра!" }
+],
+en: [
+{ type: "sys", text: "Our first stop! Right in front of you is the descent stage of the lunar module “Eagle”. In 1969 it was the first to bring people here, to the Moon. The goal was to prove that humans can reach another world, land safely and return home." },
+{ type: "gg", text: "Whoa, so this is where space travel began! But why is only the legs part left?" },
+{ type: "sys", text: "Because the “head” flew back with the astronauts, and the legs became the launch pad. During their time on the surface they collected 21 kilograms of lunar soil and rock. This helped scientists estimate the Moon’s age and gave strong support to the idea that it likely formed after Earth collided with another body." },
+{ type: "gg", text: "And are those strange little mirrors nearby their work too?" },
+{ type: "sys", text: "Of course! That is a laser retroreflector. Scientists still fire a powerful laser at it from Earth and time how long the beam takes to return. That is how we learned that the Moon drifts away from Earth by 3.8 centimeters every year!" }
+]
+},
+moreDialogue: {
+uk: [
+{ type: "gg", text: "Скільки часу астронавти провели на Місяці і що вони тут встигли зробити?" },
+{ type: "sys", text: "За даними архіву, екіпаж пробув на поверхні 21 годину 36 хвилин, з яких близько 2,5 годин за межами модуля. Вони встановили сейсмометр для фіксації місяцетрусів і зібрали зразки." },
+{ type: "gg", text: "А що сталося з верхньою кабіною після того, як вони повернулися на головний корабель «Колумбія»?" },
+{ type: "sys", text: "Після стикування на орбіті злітний ступінь «Орла» відстикували і залишили обертатися навколо Місяця. Імовірно, через гравітаційні збурення його орбіта з часом знизилася, і він упав на місячну поверхню." }
+],
+en: [
+{ type: "gg", text: "How long did the astronauts stay on the Moon, and what did they do here?" },
+{ type: "sys", text: "According to the archives, the crew stayed on the surface for 21 hours and 36 minutes, about 2.5 hours of it outside the module. They set up a seismometer to detect moonquakes and collected samples." },
+{ type: "gg", text: "And what happened to the upper cabin after they returned to the main Command Module “Columbia”?" },
+{ type: "sys", text: "After docking in lunar orbit, the ascent stage was jettisoned and left circling the Moon. Most likely, gravitational perturbations lowered its orbit over time until it hit the lunar surface." }
+]
+},
+engText: {
+uk: "Посадковий ступінь мав масу понад 10 тонн (разом із паливом), висоту 3,2 м і діаметр 4,2 м. Для посадки використовувався рідинний двигун із регульованою тягою.",
+en: "The descent stage had a fueled mass of over 10,300 kg, standing 3.2 m tall and 4.2 m wide, powered by a throttleable descent propulsion engine."
+},
+facts: {
+uk: ["Перша висадка людей на інше небесне тіло (20 липня 1969).", "На Землю доставлено 21,55 кг зразків місячного ґрунту та порід.", "Залишений лазерний відбивач працює вже понад пів століття."],
+en: ["First human landing on another celestial body (July 20, 1969).", "Brought back 21.55 kg (47.5 lb) of lunar soil and rock samples.", "The deployed laser retroreflector has been operating for over half a century."]
+}
+},
+{
+id: "lrv", group: "moon",
+src: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C",
+place: { uk: "Місця посадок Apollo 15, 16 та 17", en: "Apollo 15, 16 and 17 landing sites" },
+status: { uk: "Залишено на поверхні (1971–1972)", en: "Left on the surface (1971–1972)" },
+name: { uk: "Місячні ровінгові автомобілі (LRV)", en: "Lunar Roving Vehicles (LRV)" },
+dialogue: {
+uk: [
+{ type: "sys", text: "А тепер праворуч, бачиш цю «машину»? На Місяць на початку 70-х відправили аж 3 таких баггі під час Apollo 15, 16 та 17. Без них астронавти не відійшли б від посадкового модуля більше, ніж на кілька сотень метрів, спробуй побігай у таких важких скафандрах!" },
+{ type: "gg", text: "Як їх взагалі впихнули на корабель, і чому вони досі стоять тут, невже вченим не шкода було полишити їх там? Виглядають дорогими." },
+{ type: "sys", text: "Інженери зробили їх розкладними, немов трансформер. На Землі він важив 210 кг, а на Місяці через слабшу гравітацію лише близько 35 кг! Чіплявся такий збоку модуля. Але забирати їх назад було б значно дорожче, ніж побудувати такий самий новий на Землі, тому ця трійця лишилась тут назавжди. Баггі Apollo 17 навіть рекорд встановив на Місяці: розігнався аж до 18 км/год!" }
+],
+en: [
+{ type: "sys", text: "Now, look to your right! See that “car” over there? Back in the early 1970s, NASA sent three of these lunar buggies to the Moon during the Apollo 15, 16, and 17 missions. Without them, astronauts would have struggled to travel more than a few hundred meters from their landing modules. Just imagine trying to walk long distances in those heavy spacesuits!" },
+{ type: "gg", text: "How did they even fit those things inside the spacecraft? And why are they still here? Didn’t the scientists feel bad about leaving them behind? They look pretty expensive!" },
+{ type: "sys", text: "The engineers designed them to fold up, almost like Transformers! On Earth, each rover weighed about 210 kilograms (only about 35 on the Moon, thanks to weaker gravity!) and was attached to the side of the lunar module. But bringing them back to Earth would have cost far more than building new ones, so all three were left on the Moon forever. The Apollo 17 rover even set a lunar speed record, reaching an impressive 18 km/h!" }
+]
+},
+moreDialogue: {
+uk: [
+{ type: "gg", text: "Та це ж перші космо-позашляховики! Хотів би я теж проїхатися на такому. Знайшли щось вчені завдяки цим поїздкам?" },
+{ type: "sys", text: "Завдяки цим «спорткарам» астронавти швидше і легше змогли дослідити територію: проїхали десятки кілометрів, піднялися на гори і навіть спустилися до кратерів! Знайшли багато цікавого, зокрема дуже давні зразки місячної кори та «помаранчевий ґрунт», що говорить про залишки давніх вулканів. А ще камери вперше в історії зняли на відео, як модуль злітає з Місяця." }
+],
+en: [
+{ type: "gg", text: "So these were basically the first off-road vehicles in space! I’d love to take one for a spin! Did scientists discover anything interesting thanks to these trips?" },
+{ type: "sys", text: "Absolutely! Thanks to these lunar “sports cars,” astronauts could explore the Moon’s surface much faster and more easily. They traveled dozens of kilometers, climbed into mountainous regions, and even ventured into craters! Along the way, they made some remarkable discoveries, including some of the oldest samples of the Moon’s crust and unusual “orange soil,” which provided evidence of ancient volcanic activity. And that’s not all! Thanks to cameras mounted on these rovers, people on Earth were able to watch a lunar module lift off from the Moon for the first time in history!" }
+]
+},
+engText: {
+uk: "LRV живився від двох неперезаряджуваних срібно-цинкових батарей, мав повний привід на всі 4 колеса та окремий електромотор на кожне колесо.",
+en: "The LRV was powered by two non-rechargeable silver-zinc batteries, with four-wheel drive and a separate electric motor on each wheel."
+},
+facts: {
+uk: ["Використано в місіях Apollo 15, 16 та 17.", "Максимальна швидкість сягала 18 км/год.", "Допомогли зібрати сотні кілограмів місячних порід.", "Цікавий факт: на Землі важив 210 кг, а на Місяці лише близько 35 кг."],
+en: ["Used on Apollo 15, 16 and 17 missions.", "Reached a top speed of 18 km/h.", "Helped gather hundreds of kilograms of lunar rocks.", "Fun fact: weighed 210 kg on Earth but only about 35 kg on the Moon."]
+}
+},
+{
+id: "viking", group: "mars",
+src: "https://science.nasa.gov/mission/viking-1/",
+place: { uk: "Рівнини Хріса та Утопія", en: "Chryse and Utopia Planitia" },
+status: { uk: "Завершили місію (1976–1982)", en: "Mission completed (1976–1982)" },
+name: { uk: "Viking 1 та Viking 2", en: "Viking 1 & 2 Landers" },
+dialogue: {
+uk: [
+{ type: "sys", text: "От ми і на Червоній планеті. Попереду стоїть посадковий модуль Viking 1, а його близнюк, тобто Viking 2, сидить з іншого боку планети. У 1976 році вони стали першими американськими апаратами, що успішно сіли на Марс і почали працювати на його поверхні. Головне завдання було амбітним: перевірити, чи існує в марсіанському ґрунті хоча б мікроскопічне життя!" },
+{ type: "gg", text: "Які чудернацькі! А чому вони не поїхали кататися планетою, як ті, кого ми бачили на Місяці, а так і стоять там?" },
+{ type: "sys", text: "Бо інженери тих часів ще не вміли робити марсоходи. «Вікінги» були стаціонарними науковими станціями на трьох ніжках. Вони залишилися там, де сіли, зате мали довгу робо-руку з ковшем, якою копали ґрунт, та власну міні-лабораторію всередині. Цікаво, що перед запуском обидва апарати ретельно простерилізували, щоб випадково не завезти на Марс «своїх» земних мікробів." }
+],
+en: [
+{ type: "sys", text: "So, here we are on the Red Planet. Ahead lies the lander of Viking 1, while its twin, Viking 2, sits on the other side of the planet. In 1976 they became the first American spacecraft to successfully land on Mars and start working on its surface. The main task was ambitious: to check whether at least microscopic life exists in Martian soil." },
+{ type: "gg", text: "How peculiar! And why didn’t they go driving around the planet, just like the ones we saw on the Moon, instead of just standing there?" },
+{ type: "sys", text: "That’s because engineers of the past didn’t know how to create Mars rovers yet. The Vikings were stationary scientific stations on three legs. They stayed where they landed, but they had a long robotic arm with a scoop for digging the soil, as well as their own mini-laboratory inside. Interestingly, both of them were thoroughly sterilized, so they wouldn’t accidentally bring any Earth microbes to Mars." }
+]
+},
+moreDialogue: {
+uk: [
+{ type: "gg", text: "Мудро! І який вердикт: життя на Марсі є чи немає?" },
+{ type: "sys", text: "Чесно кажучи, прямих доказів життя вони не знайшли, зате зробили не меншу купу інших цікавих відкриттів. «Вікінги» передали на Землю перші кольорові чіткі знімки марсіанських пейзажів, проаналізували склад ґрунту й атмосфери та роками стежили за місцевою погодою, фіксували пилові бурі й перепади температур. А знімки з орбіти показали русла, схожі на сліди річок, що текли тут колись давно!" }
+],
+en: [
+{ type: "gg", text: "That’s wise! So, what’s the verdict: is there life on Mars, or not?" },
+{ type: "sys", text: "Honestly, no direct evidence of life was found, but they made a lot of other interesting discoveries. The Vikings transmitted the first clear color photographs of Martian views to Earth, analyzed the composition of soil and atmosphere, and monitored the local weather for years, recording dust storms and temperature differences. And images from orbit revealed channels resembling the traces of rivers that flowed here long ago!" }
+]
+},
+engText: {
+uk: "Кожна станція важила близько 600 кг і використовувала радіоізотопні генератори для живлення наукових приладів, камер та газових хроматографів.",
+en: "Each station weighed about 600 kg and used radioisotope generators to power scientific instruments, cameras, and gas chromatographs."
+},
+facts: {
+uk: ["Успішна посадка влітку 1976 року.", "Зробили перші чіткі кольорові знімки поверхні Марса.", "Вимірювали склад атмосфери та марсіанську погоду."],
+en: ["Successful landing in 1976.", "The first clear color photographs of the Martian landscape.", "Measured the composition of the atmosphere and Martian weather."]
+}
+},
+{
+id: "rovers", group: "mars",
+src: "https://science.nasa.gov/mission/mars-exploration-rovers-spirit-and-opportunity/",
+place: { uk: "Кратер Гусев та плато Меридіана", en: "Gusev Crater and Meridiani Planum" },
+status: { uk: "Завершили місію (Spirit: 2010, Opportunity: 2018)", en: "Mission completed (Spirit: 2010, Opportunity: 2018)" },
+name: { uk: "Spirit та Opportunity", en: "Spirit and Opportunity" },
+dialogue: {
+uk: [
+{ type: "sys", text: "А тепер придивись: бачиш цей схил, вкритий червоним пилом? Тут назавжди завмер шестиколісний роботяга Opportunity, один із легендарних марсоходів-близнюків, які сіли на різних боках Марса на початку 2004 року. Їх відправили туди як справжніх роботів-геологів: вони мали вивчати каміння й ґрунт, з цікавою метою: дізнатися, чи була колись на цій сухій планеті рідка вода." },
+{ type: "gg", text: "А чому він зараз стоїть? В нього ж є колеса, цілих 3 пари!" },
+{ type: "sys", text: "Колеса в нього справні, не вистачило енергії. Свій план близнюки перевиконали в десятки разів! Інженери розраховували, що пропрацюють вони тут усього 90 марсіанських днів. Але Spirit катався Марсом понад 6 років, поки не загруз у м’якому піску, а Opportunity протримався ще на 8 років довше за брата і проїхав понад 45 кілометрів. Зупинила його лише гігантська глобальна пилова буря у 2018 році, що закрила сонце і розрядила бідоласі сонячні батареї." }
+],
+en: [
+{ type: "sys", text: "And now take a closer look: do you see this slope covered in red dust? Here, the six-wheeled rover Opportunity, one of the legendary twin Mars rovers that landed on opposite sides of Mars in 2004, has come to a permanent rest. They were sent here as true robotic geologists: they had to examine rocks and soil, with an intriguing goal: to find out whether liquid water had ever existed on this dry planet." },
+{ type: "gg", text: "And why is it just standing still now? It has wheels, after all, three whole pairs!" },
+{ type: "sys", text: "Its wheels are in working order, but it lacks power. The twins actually exceeded their plan many times over! Engineers expected that they would work for only 90 Martian days. But Spirit roved around Mars for over 6 years until getting stuck in soft sand, while Opportunity lasted 8 years longer than its sibling and traveled over 45 kilometers. It was stopped only by a gigantic global dust storm in 2018, which blocked out the Sun and drained the poor thing’s solar panels." }
+]
+},
+moreDialogue: {
+uk: [
+{ type: "gg", text: "Шкода їх! І що ж ці двоє встигли з’ясувати про воду на Марсі?" },
+{ type: "sys", text: "А знайшли вони беззаперечні докази того, що мільярди років тому на Марсі і справді хлюпалася рідка вода. Opportunity виявив крихітні мінеральні «чорниці», які утворюються у вологому середовищі, тоді як Spirit натрапив на сліди давніх гарячих джерел. Саме завдяки близнюкам вчені зрозуміли, що колись ця планета була цілком придатною для життя мікробів." }
+],
+en: [
+{ type: "gg", text: "I feel sorry for them! And what did these two discover about water on Mars?" },
+{ type: "sys", text: "They found irrefutable evidence that billions of years ago, liquid water really did slosh around Mars. Opportunity discovered tiny mineral “blueberries” that form only in a wet environment, while Spirit came across traces of ancient hot springs. Thanks to these twins, scientists realized the planet was once entirely suitable for microbial life." }
+]
+},
+engText: {
+uk: "Кожна машина вагою близько 185 кг працювала на сонячних панелях і мала підвіску rocker-bogie, яка допомагала долати каміння.",
+en: "Each vehicle, weighing about 185 kg, was powered by solar panels and featured a rocker-bogie suspension system that helped it navigate over rocks."
+},
+facts: {
+uk: ["Посадка в січні 2004 року.", "Opportunity встановив рекорд позаземного пробігу (45,16 км).", "Знайшли геохімічні докази колишньої присутності води."],
+en: ["Landed in January 2004.", "Opportunity set a record for extraterrestrial mileage (45.16 km).", "Found geochemical evidence of the former presence of water."]
+}
+},
+{
+id: "voyager1", group: "deep",
+src: "https://science.nasa.gov/mission/voyager/voyager-1/",
+place: { uk: "Міжзоряний простір, за межами геліосфери", en: "Interstellar space, beyond the heliosphere" },
+status: { uk: "Працює досі (з 1977 року)", en: "Still operating (since 1977)" },
+name: { uk: "Voyager 1", en: "Voyager 1" },
+dialogue: {
+uk: [
+{ type: "sys", text: "Антена шолома вловила слабкий радіосигнал далеко за орбітами всіх планет. Здається, це Voyager 1, запущений ще у далекому 1977 році. Спочатку його відправили досліджувати гігантів: Юпітера і Сатурна, скориставшись рідкісним моментом, коли планети вишикувалися в один ряд раз на 176 років." },
+{ type: "gg", text: "Він летить уже майже пів століття! Невже досі виходить на зв’язок?" },
+{ type: "sys", text: "Підтверджую: він досі надсилає дані з міжзоряного простору. Але сигнал від нього летить до Землі понад 23 години. Зате працює апарат на спеціальному ядерному джерелі живлення, тож сонячне світло йому не потрібне. Хоча воно тут усе одно нагадує лише яскраву зірку." }
+],
+en: [
+{ type: "sys", text: "The helmet’s antenna has caught a faint radio signal far beyond the orbits of all planets. It seems to be Voyager 1, launched way back in 1977. Initially, it was sent to explore the giants, Jupiter and Saturn, taking advantage of a rare alignment of planets that happens once every 176 years." },
+{ type: "gg", text: "It’s been flying for nearly half a century! Is it really still in touch?" },
+{ type: "sys", text: "Confirmed: it’s still sending data from interstellar space. But the signal from it takes over 23 hours to reach Earth. On the other hand, the craft operates using a special nuclear power source, so it doesn’t need any sunlight. In any case, the Sun out here looks like nothing more than a bright star." }
+]
+},
+moreDialogue: {
+uk: [
+{ type: "gg", text: "Ого, і що ж він встиг відкрити за таку довжелезну подорож?" },
+{ type: "sys", text: "Цілу купу всього! Саме Voyager 1 вперше зафіксував на знімках діючі вулкани на супутнику Юпітера Іо, розгледів складну структуру кілець Сатурна, а з 2012 року став першим рукотворним об’єктом, що вийшов у міжзоряний простір. А ще на його борту летить Золота платівка зі звуками Землі, музикою та вітаннями аж на 55 мовах. Там навіть українська є, на випадок, якщо інопланетяни володіють лише нею!" }
+],
+en: [
+{ type: "gg", text: "Wow, and what did it discover during such a long journey?" },
+{ type: "sys", text: "A whole bunch of stuff! It was Voyager 1 that first captured images of active volcanoes on Jupiter’s moon Io, examined the complex structure of Saturn’s rings, and in 2012 became the first human-made object to officially enter interstellar space. There’s also a Golden Record on board, containing sounds of Earth, music, and greetings in as many as 55 languages. There’s even Ukrainian, just in case the aliens speak only that!" }
+]
+},
+engText: {
+uk: "Зонд живиться від радіоізотопних термоелектричних генераторів (RTG) на плутонії, а невеликі двигуни коригують траєкторію й орієнтацію.",
+en: "The probe is powered by plutonium-based radioisotope thermoelectric generators (RTGs), while small engines adjust its trajectory and orientation."
+},
+facts: {
+uk: ["Запуск 5 вересня 1977 року.", "Найвіддаленіший рукотворний об’єкт від Землі.", "Вийшов у міжзоряний простір у серпні 2012 року."],
+en: ["Launched on September 5, 1977.", "The most distant human-made object from Earth.", "Entered interstellar space in August 2012."]
+}
+}
+];
+
+let lang = "uk";
+try { const s = localStorage.getItem("lang"); if (s === "uk" || s === "en") lang = s; } catch (e) {}
+const openMore = new Set();
+
+function modelUrl(id) { return location.origin + location.pathname + "?model=" + id; }
+function renderMsgs(list) { return list.map(m => `<div class="msg ${m.type}">${m.text}</div>`).join(""); }
+
+function render() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el => el.textContent = UI[lang][el.dataset.t]);
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  document.getElementById("intro").innerHTML = UI[lang].intro.split("\n").map(t => `<p>${t}</p>`).join("");
+  const box = document.getElementById("chapters");
+  box.innerHTML = "";
+  let prevGroup = null;
+  CHAPTERS.forEach(c => {
+    if (c.group !== prevGroup) {
+      const h = document.createElement("h2");
+      h.className = "group";
+      h.textContent = G[c.group][lang];
+      box.appendChild(h);
+      prevGroup = c.group;
+    }
+    const isOpen = openMore.has(c.id);
+    const a = document.createElement("article");
+    const moreHtml = c.moreDialogue
+      ? `<button class="btn-outline" data-more="${c.id}" aria-expanded="${isOpen}" aria-controls="more-${c.id}">${isOpen ? UI[lang].askLess : UI[lang].askMore}</button>
+         <div class="more-box${isOpen ? " open" : ""}" id="more-${c.id}">${renderMsgs(c.moreDialogue[lang])}</div>`
+      : "";
+    a.innerHTML = `
+      <p class="place">${c.place[lang]}</p>
+      <h2>${c.name[lang]}</h2>
+      <span class="badge">${c.status[lang]}</span>
+      <div class="dialogue">${renderMsgs(c.dialogue[lang])}${moreHtml}</div>
+      <div class="eng"><h3>${UI[lang].eng}</h3><p>${c.engText[lang]}</p></div>
+      <div class="science"><h3>${UI[lang].science}</h3><ul>${c.facts[lang].map(f => `<li>${f}</li>`).join("")}</ul></div>
+      <div class="row">
+        <div class="qr" id="qr-${c.id}"></div>
+        <div><button class="btn" data-open="${c.id}">${UI[lang].view3d}</button><p class="hint">${UI[lang].scan}</p></div>
+      </div>
+      <p class="src">${UI[lang].source}: <a href="${c.src}" target="_blank" rel="noopener">${c.src.replace("https://", "")}</a></p>`;
+    box.appendChild(a);
+    try { new QRCode(a.querySelector("#qr-" + c.id), { text: modelUrl(c.id), width: 110, height: 110 }); } catch (e) {}
+  });
+  box.querySelectorAll("[data-open]").forEach(b => b.onclick = () => openModel(b.dataset.open));
+  box.querySelectorAll("[data-more]").forEach(b => b.onclick = () => {
+    const id = b.dataset.more;
+    const more = document.getElementById("more-" + id);
+    const nowOpen = more.classList.toggle("open");
+    nowOpen ? openMore.add(id) : openMore.delete(id);
+    b.setAttribute("aria-expanded", nowOpen);
+    b.textContent = nowOpen ? UI[lang].askLess : UI[lang].askMore;
+  });
+}
+
+const mv = document.getElementById("mv"), viewer = document.getElementById("viewer"), vmsg = document.getElementById("vmsg");
+function openModel(id) {
+  const c = CHAPTERS.find(x => x.id === id); if (!c) return;
+  document.getElementById("vtitle").textContent = c.name[lang];
+  vmsg.textContent = "";
+  mv.src = "models/" + id + ".glb";
+  viewer.classList.add("on");
+}
+mv.addEventListener("error", () => { vmsg.textContent = UI[lang].noModel; });
+document.getElementById("vclose").onclick = () => { viewer.classList.remove("on"); history.replaceState(null, "", location.pathname); };
+document.querySelectorAll(".lang button").forEach(b => b.onclick = () => {
+  lang = b.dataset.l; try { localStorage.setItem("lang", lang); } catch (e) {}
+  render();
+});
+
+render();
+const m = new URLSearchParams(location.search).get("model");
+if (m) openModel(m);
+</script>
+</body>
+</html>
